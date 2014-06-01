@@ -43,17 +43,15 @@ def _build_ascii_stl(facets):
 def writeSTL(facets, file_name, ascii=False):
     """writes an ASCII or binary STL file"""
 
-    f = open(file_name, 'wb')
     if ascii:
         lines = _build_ascii_stl(facets)
         lines_ = "\n".join(lines).encode("UTF-8")
-        f.write(lines_)
+        return lines_
     else:
         data = _build_binary_stl(facets)
         data = b"".join(data)
-        f.write(data)
+        return data
 
-    f.close()
 
 
 def roll2d(image, shifts):
@@ -198,4 +196,4 @@ def numpy2stl(A, fn, scale=0.1, mask_val=None, ascii=False,
     if zsize > max_height:
         facets = facets * float(max_height) / zsize
 
-    writeSTL(facets, fn, ascii=ascii)
+    return writeSTL(facets, fn, ascii=ascii)
